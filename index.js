@@ -16,6 +16,7 @@ async function run() {
     try {
         await client.connect();
         const addevent = client.db("volunteer").collection("addevent");
+        const registervolunteer = client.db("volunteer").collection("registervolunteer");
 
         //services get by database
         app.get("/showallevents", async (req, res) => {
@@ -23,13 +24,20 @@ async function run() {
             const result = await cursor.toArray();
             res.send(result)
         })
+
+        // registervolunteer add database
+        app.post("/registervolunteer", async (req, res) => {
+            const data = req.body;
+            const result = await registervolunteer.insertOne(data);
+            res.json(result);
+        })
         //srvices addevent database
         app.post("/addevent", async (req, res) => {
             const data = req.body;
             const result = await addevent.insertOne(data);
             res.json(result)
         })
-        // p5bCn2(f42BEH)g
+        
     } finally {
         
      }
